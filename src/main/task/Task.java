@@ -2,6 +2,7 @@ package main.task;
 
 import main.manager.TaskTypes;
 
+import java.time.Instant;
 import java.util.Objects;
 
 /**
@@ -19,6 +20,10 @@ public class Task {
 
     protected StatusEnum status;
 
+    protected Instant startTime;
+
+    protected long duration;
+
     public Task(Integer id, String taskName, String description, StatusEnum status) {
         this.id = id;
         this.taskName = taskName;
@@ -32,6 +37,14 @@ public class Task {
         this.id = id;
         this.taskName = name;
         this.description = description;
+    }
+
+    public Task(String description, String taskName, StatusEnum status, Instant startTime, long duration) {
+        this.description = description;
+        this.taskName = taskName;
+        this.status = status;
+        this.startTime = startTime;
+        this.duration = duration;
     }
 
     public void setId(Integer id) {
@@ -66,16 +79,39 @@ public class Task {
         return status;
     }
 
+    public Instant getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(Instant startTime) {
+        this.startTime = startTime;
+    }
+
+    public long getDuration() {
+        return duration;
+    }
+
+    public void setDuration(long duration) {
+        this.duration = duration;
+    }
+
+    public Instant getEndTime() {
+        long SECONDS_IN_MINUTE = 60L;
+        return startTime.plusSeconds(duration * SECONDS_IN_MINUTE);
+    }
 
     @Override
     public String toString() {
-        return "main.task.Task{" +
+        return "Task{" +
                 "id=" + id +
+                ", taskType=" + taskType +
                 ", taskName='" + taskName + '\'' +
                 ", description='" + description + '\'' +
                 ", status=" + status +
+                ", startTime=" + startTime +
+                ", duration=" + duration +
                 '}';
-    }
+    } // доработать endTime
 
     public String toStringFromFile() {
         return String.format("%s,%s,%s,%s,%s,%s", id, taskType, taskName, status, description, "");

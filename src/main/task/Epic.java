@@ -2,6 +2,7 @@ package main.task;
 
 import main.manager.TaskTypes;
 
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -12,6 +13,8 @@ import java.util.Objects;
 public class Epic extends Task {
 
     private List<Integer> subtaskIDs;
+
+    protected Instant endTime;
 
     public Epic(Integer id, String name, String description) {
         super(id, name, description, null);
@@ -24,6 +27,11 @@ public class Epic extends Task {
         this.subtaskIDs = new ArrayList<>();
         this.taskType = TaskTypes.EPIC;
         this.status = status;
+    }
+
+    public Epic(String description, String taskName, StatusEnum status, Instant startTime, long duration) {
+        super(description, taskName, status, startTime, duration);
+        this.endTime = super.getEndTime();
     }
 
 

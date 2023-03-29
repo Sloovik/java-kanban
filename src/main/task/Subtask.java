@@ -2,6 +2,7 @@ package main.task;
 
 import main.manager.TaskTypes;
 
+import java.time.Instant;
 import java.util.Objects;
 
 /**
@@ -9,7 +10,7 @@ import java.util.Objects;
  */
 public class Subtask extends Task {
 
-    private Integer epicId;
+    protected Integer epicId;
 
 
 
@@ -26,6 +27,12 @@ public class Subtask extends Task {
         this.taskType = TaskTypes.SUBTASK;
     }
 
+    public Subtask(String description, String taskName, StatusEnum status, Integer epicId, Instant startTime,
+                   long duration) {
+        super(description, taskName, status, startTime, duration);
+        this.epicId = epicId;
+    }
+
     public Integer getEpicID() {
         return epicId;
     }
@@ -35,17 +42,19 @@ public class Subtask extends Task {
     }
 
 
-
     @Override
     public String toString() {
-        return "main.task.Subtask{" +
-                "id=" + id +
-                ", name='" + taskName + "'" +
-                ", description='" + description + "'" +
-                ", epicID=" + epicId +
-                ", status='" + status +
-                "'}";
-    }
+        return "Subtask{" +
+                "epicId=" + epicId +
+                ", id=" + id +
+                ", taskType=" + taskType +
+                ", taskName='" + taskName + '\'' +
+                ", description='" + description + '\'' +
+                ", status=" + status +
+                ", startTime=" + startTime +
+                ", duration=" + duration +
+                '}';
+    } // finalize with endTime
 
     @Override
     public String toStringFromFile() {
