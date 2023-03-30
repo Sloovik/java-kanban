@@ -46,7 +46,7 @@ abstract class TaskManagerTest <T extends TaskManager> {
         assertEquals(StatusEnum.NEW, epic.getStatus());
         assertEquals(Collections.EMPTY_LIST, epic.getSubtaskIDs());
         assertEquals(List.of(epic), epics);
-    }
+    } // trbl
 
     @Test
     public void shouldCreateSubtask() {
@@ -60,7 +60,7 @@ abstract class TaskManagerTest <T extends TaskManager> {
         assertEquals(StatusEnum.NEW, subtask.getStatus());
         assertEquals(List.of(subtask), subtasks);
         assertEquals(List.of(subtask.getId()), epic.getSubtaskIDs());
-    }
+    } // trbl
 
     @Test
     void shouldReturnNullWhenCreateTaskNull() {

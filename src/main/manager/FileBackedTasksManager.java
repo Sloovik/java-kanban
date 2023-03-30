@@ -222,6 +222,7 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
 
     @Override
     public Integer addTask(Task task) {
+        if (task == null) return null;
         super.addTask(task);
         save();
         return task.getId();
@@ -229,6 +230,7 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
 
     @Override
     public Integer addSubtask(Subtask subtask) {
+        if (subtask == null) return null;
         super.addSubtask(subtask);
         save();
         return subtask.getId();
@@ -236,6 +238,7 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
 
     @Override
     public Integer addEpic(Epic epic) {
+        if (epic == null) return null;
         super.addEpic(epic);
         save();
         return epic.getId();
