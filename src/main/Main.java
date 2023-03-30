@@ -18,20 +18,20 @@ public class Main {
     public static void main(String[] args) {
         TaskManager taskManager = Managers.getDefault("data/data.csv");
 
-        Integer task1 = taskManager.add(new Task(1, "Первый таск", "Убраться", NEW));
-        Integer task2 = taskManager.add(new Task(2, "Второй таск", "Уехать за город", NEW));
+        Integer task1 = taskManager.addTask(new Task(1, "Первый таск", "Убраться", NEW));
+        Integer task2 = taskManager.addTask(new Task(2, "Второй таск", "Уехать за город", NEW));
 
-        Integer epic1 = taskManager.add(new Epic(3, "Мой первый эпик", "Поступить в школу"));
+        Integer epic1 = taskManager.addEpic(new Epic(3, "Мой первый эпик", "Поступить в школу"));
 
-        Integer subtask1 = taskManager.add(
+        Integer subtask1 = taskManager.addSubtask(
                 new Subtask("Первый сабтаск первого эпика", "Выучить язык", NEW, 3));
 
-        Integer subtask2 = taskManager.add(
+        Integer subtask2 = taskManager.addSubtask(
                 new Subtask("Второй сабтаск первого эпика", "Помыться", NEW, epic1));
 
-        Integer epic2 = taskManager.add(new Epic(6, "Второй эпик", "Переехать к подруге"));
+        Integer epic2 = taskManager.addEpic(new Epic(6, "Второй эпик", "Переехать к подруге"));
 
-        Integer subtask3 = taskManager.add(
+        Integer subtask3 = taskManager.addSubtask(
                 new Subtask("Первый сабтаск второго эпика", "Побриться", NEW, epic2));
 
         taskManager.getTaskByID(task1);

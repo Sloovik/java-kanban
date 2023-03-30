@@ -38,17 +38,17 @@ public interface TaskManager {
 
     Epic getEpicByID(Integer id);
 
-    Integer add(Task task);
+    Integer addTask(Task task);
 
-    Integer add(Subtask task);
+    Integer addSubtask(Subtask task);
 
-    Integer add(Epic epic);
+    Integer addEpic(Epic epic);
 
-    void update(Task task);
+    void updateTask(Task task);
 
-    void update(Subtask subtask);
+    void updateSubtask(Subtask subtask);
 
-    void update(Epic epic);
+    void updateEpic(Epic epic);
 
     List<Task> getHistory();
 

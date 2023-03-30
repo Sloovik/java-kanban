@@ -208,14 +208,14 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     @Override
-    public Integer add(Task task) {
+    public Integer addTask(Task task) {
         task.setId(nextID++);
         tasks.put(task.getId(), task);
         return task.getId();
     }
 
     @Override
-    public Integer add(Subtask subtask) {
+    public Integer addSubtask(Subtask subtask) {
         subtask.setId(nextID++);
         subtasks.put(subtask.getId(), subtask);
         List<Integer> newSubtaskList = updateSubtasksInEpic(epics.get(subtask.getEpicID()));
@@ -227,7 +227,7 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     @Override
-    public Integer add(Epic epic) {
+    public Integer addEpic(Epic epic) {
         epic.setId(nextID++);
         epic.setStatus(StatusEnum.NEW);
         List<Integer> list = updateSubtasksInEpic(epic);
@@ -237,19 +237,19 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     @Override
-    public void update(Task task) {
+    public void updateTask(Task task) {
         tasks.put(task.getId(), task);
     }
 
     @Override
-    public void update(Subtask subtask) {
+    public void updateSubtask(Subtask subtask) {
         subtasks.put(subtask.getId(), subtask);
         updateEpicStatus(subtask.getEpicID());
     }
 
 
     @Override
-    public void update(Epic epic) {
+    public void updateEpic(Epic epic) {
         epics.put(epic.getId(), epic);
     }
 
