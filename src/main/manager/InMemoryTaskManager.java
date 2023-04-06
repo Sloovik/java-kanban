@@ -5,10 +5,7 @@ import main.task.StatusEnum;
 import main.task.Subtask;
 import main.task.Task;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Класс-менеджер для управления всеми задачами (ранее - taskManager).
@@ -23,6 +20,10 @@ public class InMemoryTaskManager implements TaskManager {
 
     private List<Integer> allTypesOfTasksIds;
     final InMemoryHistoryManager historyManager;
+
+    private final Comparator<Task> taskComparator = Comparator.comparing(Task::getStartTime);
+
+    protected Set<Task> prioritizedTasks = new TreeSet<>(taskComparator);
 
 
     public InMemoryTaskManager() {
@@ -269,5 +270,52 @@ public class InMemoryTaskManager implements TaskManager {
         return historyManager.getHistory();
     }
 
+    private void addNewPrioritizedTask(Task task) {
+        prioritizedTasks.add(task);
+        validateTaskPriority();
+    }
+
+    public boolean checkTime(Task task) {
+        List<Task> tasks = List.copyOf(prioritizedTasks);
+        int sizeTimeNull = 0;
+        if (tasks.size() > 0) {
+            for (Task taskSave : tasks) {
+                if (taskSave.getStartTime() != null && taskSave.getEndTime() != null) {
+                    if (task.getStartTime().isBefore(taskSave.getStartTime())
+                            && task.getEndTime().isBefore(taskSave.getStartTime())) {
+                        return true;
+                    } else if (task.getStartTime().isAfter(taskSave.getEndTime())
+                            && task.getEndTime().isAfter(taskSave.getEndTime())) {
+                        return true;
+                    }
+                } else {
+                    sizeTimeNull++;
+                }
+
+            }
+            return sizeTimeNull == tasks.size();
+        } else {
+            return true;
+        }
+    }
+
+    private void validateTaskPriority() {
+        List<Task> tasks = getPrioritizedTasks();
+
+        for (int i = 1; i < tasks.size(); i++) {
+            Task task = tasks.get(i);
+
+            boolean taskHasIntersections = checkTime(task);
+
+            if (taskHasIntersections) {
+                throw new ManagerIntersectionException(
+                        "Задачи #" + task.getId() + " и #" + tasks.get(i - 1) + "пересекаются");
+            }
+        }
+    }
+
+    private List<Task> getPrioritizedTasks() {
+        return prioritizedTasks.stream().toList();
+    }
 
 }
