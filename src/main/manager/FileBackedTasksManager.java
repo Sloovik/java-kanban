@@ -1,5 +1,6 @@
 package main.manager;
 
+import main.exceptions.ManagerSaveException;
 import main.task.Epic;
 import main.task.Subtask;
 import main.task.Task;
@@ -67,7 +68,7 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
 
                 switch (taskType) {
                     case EPIC -> {
-                        Epic epic = (Epic) fromString(line, TaskTypes.EPIC, backedManager);
+                        Epic epic = (Epic) fromString(line);
                         id = epic.getId();
                         if (id > backedManager.id) {
                             backedManager.id = id;
@@ -76,7 +77,7 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
                         backedManager.epics.put(id, epic);
                     }
                     case SUBTASK -> {
-                        var subtask = (Subtask) fromString(line, TaskTypes.SUBTASK, backedManager);
+                        var subtask = (Subtask) fromString(line);
                         var epics = backedManager.getEpicList();
 
                         id = subtask.getId();
@@ -84,24 +85,24 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
                             backedManager.id = id;
                         }
 
-                            Epic epic = epics
-                                    .stream()
-                                    .filter(e -> Objects.equals(e.getId(), subtask.getEpicID()))
-                                    .findFirst()
-                                    .orElseThrow(() -> new IllegalArgumentException("Epic not found"));
+                        Epic epic = epics
+                                .stream()
+                                .filter(e -> Objects.equals(e.getId(), subtask.getEpicID()))
+                                .findFirst()
+                                .orElseThrow(() -> new IllegalArgumentException("Epic not found"));
 
-                            if (!epic.getSubtaskIDs().contains(subtask.getId())) {
-                                var index = epics.indexOf(epic);
+                        if (!epic.getSubtaskIDs().contains(subtask.getId())) {
+                            var index = epics.indexOf(epic);
 
-                                epic.appendSubtaskId(subtask.getId());
-                                epics.set(index, epic);
-                            }
+                            epic.appendSubtaskId(subtask.getId());
+                            epics.set(index, epic);
+                        }
 
                         backedManager.subtasks.put(id, subtask);
                     }
 
                     case TASK -> {
-                        Task task = fromString(line, TaskTypes.TASK, backedManager);
+                        Task task = fromString(line);
                         id = task.getId();
                         if (id > backedManager.id) {
                             backedManager.id = id;
@@ -160,18 +161,17 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
             int counter = 1;
 
 
-            for (int i = 0; i < tasks.size(); i++) {
-                allTasks.put(counter, tasks.get(i).toStringFromFile());
+            for (Task task : tasks) {
+                allTasks.put(counter, task.toStringFromFile());
                 counter++;
             }
 
-            for (int i = 0; i < epics.size(); i++) {
-                allTasks.put(counter, epics.get(i).toStringFromFile());
+            for (Epic item : epics) {
+                allTasks.put(counter, item.toStringFromFile());
                 counter++;
             }
 
-            for (int i = 0; i < subtasks.size(); i++) {
-                Subtask subtask = subtasks.get(i);
+            for (Subtask subtask : subtasks) {
                 allTasks.put(counter, subtask.toStringFromFile());
 
                 Epic epic = epics

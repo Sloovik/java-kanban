@@ -1,4 +1,4 @@
-package main.manager;
+package main.exceptions;
 
 public class ManagerIntersectionException extends RuntimeException {
 

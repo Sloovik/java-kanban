@@ -1,5 +1,7 @@
-package main.manager;
+package main.test;
 
+import main.manager.HistoryManager;
+import main.manager.InMemoryHistoryManager;
 import main.task.StatusEnum;
 import main.task.Task;
 import org.junit.jupiter.api.BeforeEach;

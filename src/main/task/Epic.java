@@ -32,6 +32,7 @@ public class Epic extends Task {
     public Epic(String description, String taskName, StatusEnum status, Instant startTime, long duration) {
         super(description, taskName, status, startTime, duration);
         this.endTime = super.getEndTime();
+        this.subtaskIDs = new ArrayList<>();
     }
 
 
@@ -41,6 +42,15 @@ public class Epic extends Task {
 
     public void setSubtaskIDs(List<Integer> subtaskIDs) {
         this.subtaskIDs = subtaskIDs;
+    }
+
+    @Override
+    public Instant getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(Instant endTime) {
+        this.endTime = endTime;
     }
 
     public void appendSubtaskId(Integer subtaskId) {

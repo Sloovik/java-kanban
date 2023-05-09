@@ -1,5 +1,8 @@
-package main.manager;
+package main.test;
 
+import main.manager.FileBackedTasksManager;
+import main.manager.InMemoryTaskManager;
+import main.manager.Managers;
 import main.task.Epic;
 import main.task.StatusEnum;
 import main.task.Task;
@@ -17,7 +20,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class FileBackedTasksManagerTest extends TaskManagerTest<InMemoryTaskManager>{
+class FileBackedTasksManagerTest extends TaskManagerTest<InMemoryTaskManager> {
 
     public static final Path path = Path.of("data.csv");
     File file = new File(String.valueOf(path));

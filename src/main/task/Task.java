@@ -11,17 +11,11 @@ import java.util.Objects;
 public class Task {
 
     protected Integer id;
-
     protected TaskTypes taskType;
-
     protected String taskName;
-
     protected String description;
-
     protected StatusEnum status;
-
     protected Instant startTime;
-
     protected long duration;
 
     public Task(Integer id, String taskName, String description, StatusEnum status) {
@@ -108,10 +102,11 @@ public class Task {
                 ", taskName='" + taskName + '\'' +
                 ", description='" + description + '\'' +
                 ", status=" + status +
-                ", startTime=" + startTime +
+                ", startTime=" + startTime.toEpochMilli() +
+                ", endTime=" + getEndTime().toEpochMilli() +
                 ", duration=" + duration +
                 '}';
-    } // доработать endTime
+    }
 
     public String toStringFromFile() {
         return String.format("%s,%s,%s,%s,%s,%s", id, taskType, taskName, status, description, "");

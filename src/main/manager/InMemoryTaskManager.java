@@ -1,10 +1,12 @@
 package main.manager;
 
+import main.exceptions.ManagerIntersectionException;
 import main.task.Epic;
 import main.task.StatusEnum;
 import main.task.Subtask;
 import main.task.Task;
 
+import java.time.Instant;
 import java.util.*;
 
 /**
@@ -240,21 +242,59 @@ public class InMemoryTaskManager implements TaskManager {
         return epic.getId();
     }
 
+    public void updateTimeEpic(Epic epic) {
+        List<Subtask> subtasks = getSubtaskListByEpicID(epic.getId());
+        Instant startTime = subtasks.get(0).getStartTime();
+        Instant endTime = subtasks.get(0).getEndTime();
+
+        for (Subtask subtask : subtasks) {
+            if (subtask.getStartTime().isBefore(startTime)) startTime = subtask.getStartTime();
+            if (subtask.getEndTime().isAfter(endTime)) endTime = subtask.getEndTime();
+        }
+
+        epic.setStartTime(startTime);
+        epic.setEndTime(endTime);
+        long duration = (endTime.toEpochMilli() - startTime.toEpochMilli());
+        epic.setDuration(duration);
+    }
+
+
     @Override
     public void updateTask(Task task) {
-        tasks.put(task.getId(), task);
+        if (task != null && getTaskList().contains(task)) {
+            addNewPrioritizedTask(task);
+            tasks.put(task.getId(), task);
+        } else {
+            System.out.println("Task not found((");
+        }
+
     }
 
     @Override
     public void updateSubtask(Subtask subtask) {
-        subtasks.put(subtask.getId(), subtask);
-        updateEpicStatus(subtask.getEpicID());
+        if (subtask != null && subtasks.containsKey(subtask.getId())) {
+            addNewPrioritizedTask(subtask);
+            subtasks.put(subtask.getId(), subtask);
+            Epic epic = epics.get(subtask.getEpicID());
+            updateEpicStatus(subtask.getEpicID());
+            updateTimeEpic(epic);
+        } else {
+            System.out.println("Subtask not found");
+        }
+
     }
 
 
     @Override
     public void updateEpic(Epic epic) {
-        epics.put(epic.getId(), epic);
+        if (epic != null && epics.containsKey(epic.getId())) {
+            epics.put(epic.getId(), epic);
+            updateTimeEpic(epic);
+            updateEpicStatus(epic.getId());
+        } else {
+            System.out.println("Epic not found!1!");
+        }
+
     }
 
     public List<Subtask> getSubtaskListByEpicID(Integer id) {

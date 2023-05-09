@@ -13,12 +13,9 @@ public class Subtask extends Task {
     protected Integer epicId;
 
 
-
     public Subtask(Integer id, String taskName, String description, StatusEnum status, Integer epicId) {
         super(id, taskName, description, status);
         this.epicId = epicId;
-
-
     }
 
     public Subtask(String taskName, String description, StatusEnum status, Integer epicId) {
