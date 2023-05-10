@@ -16,21 +16,21 @@ public class Epic extends Task {
 
     protected Instant endTime;
 
-    public Epic(Integer id, String name, String description) {
-        super(id, name, description, null);
-        subtaskIDs = new ArrayList<>();
-        this.taskType = TaskTypes.EPIC;
-    }
+//    public Epic(Integer id, String name, String description) {
+//        super(id, name, description);
+//        subtaskIDs = new ArrayList<>();
+//        this.taskType = TaskTypes.EPIC;
+//    }
 
-    public Epic(int id, String name, StatusEnum status, String description) {
-        super(id, name, description, null);
-        this.subtaskIDs = new ArrayList<>();
-        this.taskType = TaskTypes.EPIC;
-        this.status = status;
-    }
+//    public Epic(int id, String name, StatusEnum status, String description) {
+//        super(id, name, description);
+//        this.subtaskIDs = new ArrayList<>();
+//        this.taskType = TaskTypes.EPIC;
+//        this.status = status;
+//    }
 
-    public Epic(String description, String taskName, StatusEnum status, Instant startTime, long duration) {
-        super(description, taskName, status, startTime, duration);
+    public Epic(String description, String taskName, StatusEnum status, Instant startTime, long duration, TaskTypes taskType) {
+        super(description, taskName, status, startTime, duration, taskType);
         this.endTime = super.getEndTime();
         this.subtaskIDs = new ArrayList<>();
     }
@@ -60,13 +60,14 @@ public class Epic extends Task {
     @Override
     public String toString() {
         return "Epic{" +
-                "id=" + id +
+                "id=" + getId() +
                 ", taskType=" + taskType +
-                ", taskName='" + taskName + '\'' +
-                ", description='" + description + '\'' +
-                ", status=" + status +
-                ", startTime=" + startTime +
-                ", duration=" + duration +
+                ", taskName='" + getTaskName() + '\'' +
+                ", description='" + getDescription() + '\'' +
+                ", status=" + getStatus() +
+                ", startTime=" + getStartTime().toEpochMilli() +
+                ", endTime=" + getEndTime().toEpochMilli() +
+                ", duration=" + getDuration() +
                 '}';
     }
 

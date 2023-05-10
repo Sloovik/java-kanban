@@ -156,7 +156,7 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
         List<Subtask> subtasks = super.getSubtaskList();
 
         try (Writer writer = new FileWriter(file)) {
-            writer.write("id,type,name,status,description,epic\n");
+            writer.write("id,type,name,status,description,startTime,duration,epic\n");
 
             int counter = 1;
 

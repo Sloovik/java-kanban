@@ -13,22 +13,27 @@ public class Subtask extends Task {
     protected Integer epicId;
 
 
-    public Subtask(Integer id, String taskName, String description, StatusEnum status, Integer epicId) {
-        super(id, taskName, description, status);
-        this.epicId = epicId;
-    }
+//    public Subtask(Integer id, String taskName, String description, StatusEnum status, Integer epicId, Instant startTime, long duration) {
+//        super(id, taskName, description, status, startTime, duration);
+//        this.epicId = epicId;
+//    }
 
-    public Subtask(String taskName, String description, StatusEnum status, Integer epicId) {
-        super(epicId, taskName, description, status);
-        this.epicId = epicId;
-        this.taskType = TaskTypes.SUBTASK;
-    }
+//    public Subtask(String taskName, String description, StatusEnum status, Integer epicId, Instant startTime, long duration) {
+//        super(epicId, taskName, description, status, startTime, duration);
+//        this.epicId = epicId;
+//        this.taskType = TaskTypes.SUBTASK;
+//    }
 
     public Subtask(String description, String taskName, StatusEnum status, Integer epicId, Instant startTime,
-                   long duration) {
-        super(description, taskName, status, startTime, duration);
+                   long duration, TaskTypes taskType) {
+        super(description, taskName, status, startTime, duration, taskType);
         this.epicId = epicId;
     }
+//    public Subtask(
+//            String description, String name, StatusEnum status, int epicId, Instant startTime, long duration) {
+//        super(description, name, status, startTime, duration);
+//        this.epicId = epicId;
+//    }
 
     public Integer getEpicID() {
         return epicId;

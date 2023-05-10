@@ -18,14 +18,23 @@ public class Task {
     protected Instant startTime;
     protected long duration;
 
-    public Task(Integer id, String taskName, String description, StatusEnum status) {
+    public Task(Integer id, String taskName, String description, StatusEnum status, Instant startTime, long duration) {
         this.id = id;
         this.taskName = taskName;
         this.description = description;
         this.status = status;
         this.taskType = TaskTypes.TASK;
+        this.startTime = startTime;
+        this.duration = duration;
     }
 
+    public Task(String description, String name, StatusEnum status, Instant startTime, long duration) {
+        this.description = description;
+        this.taskName = name;
+        this.status = status;
+        this.startTime = startTime;
+        this.duration = duration;
+    }
 
     public Task(Integer id, String name, String description) {
         this.id = id;
@@ -33,14 +42,14 @@ public class Task {
         this.description = description;
     }
 
-    public Task(String description, String taskName, StatusEnum status, Instant startTime, long duration) {
+    public Task(String description, String taskName, StatusEnum status, Instant startTime, long duration, TaskTypes taskType) {
         this.description = description;
         this.taskName = taskName;
         this.status = status;
         this.startTime = startTime;
         this.duration = duration;
+        this.taskType = taskType;
     }
-
     public void setId(Integer id) {
         this.id = id;
     }
@@ -109,7 +118,7 @@ public class Task {
     }
 
     public String toStringFromFile() {
-        return String.format("%s,%s,%s,%s,%s,%s", id, taskType, taskName, status, description, "");
+        return String.format("%s,%s,%s,%s,%s,%s,%s,%s", id, taskType, taskName, status, description, startTime, duration, "");
     }
 
     @Override

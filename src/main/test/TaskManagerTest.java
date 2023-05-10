@@ -1,6 +1,7 @@
 package main.test;
 
 import main.manager.TaskManager;
+import main.manager.TaskTypes;
 import main.task.Epic;
 import main.task.StatusEnum;
 import main.task.Subtask;
@@ -18,14 +19,14 @@ abstract class TaskManagerTest <T extends TaskManager> {
 
     protected T manager;
     protected Task createTask() {
-        return new Task("Description", "Title", StatusEnum.NEW, Instant.now(), 0);
+        return new Task("Description", "Title", StatusEnum.NEW, Instant.now(), 0, TaskTypes.TASK);
     }
     protected Epic createEpic() {
 
-        return new Epic("Description", "Title", StatusEnum.NEW, Instant.now(), 0);
+        return new Epic("Description", "Title", StatusEnum.NEW, Instant.now(), 0, TaskTypes.EPIC);
     }
     protected Subtask createSubtask(Epic epic) {
-        return new Subtask("Description", "Title", StatusEnum.NEW, epic.getId(), Instant.now(), 0);
+        return new Subtask("Description", "Title", StatusEnum.NEW, epic.getId(), Instant.now(), 0, TaskTypes.SUBTASK);
     }
 
     @Test

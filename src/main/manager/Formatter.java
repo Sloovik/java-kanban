@@ -42,16 +42,16 @@ public class Formatter {
         Integer epicId = type.equals("SUBTASK") ? Integer.parseInt(params[7]) : null;
 
         if (type.equals("EPIC")) {
-            Epic epic = new Epic(description, name, status, startTime, duration);
+            Epic epic = new Epic(description, name, status, startTime, duration, TaskTypes.EPIC);
             epic.setId(id);
             epic.setStatus(status);
             return epic;
         } else if (type.equals("SUBTASK")) {
-            Subtask subtask = new Subtask(description, name, status, epicId, startTime, duration);
+            Subtask subtask = new Subtask(description, name, status, epicId, startTime, duration, TaskTypes.SUBTASK);
             subtask.setId(id);
             return subtask;
         } else {
-            Task task = new Task(description, name, status, startTime, duration);
+            Task task = new Task(description, name, status, startTime, duration, TaskTypes.TASK);
             task.setId(id);
             return task;
         }

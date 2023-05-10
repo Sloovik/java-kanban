@@ -2,6 +2,7 @@ package main.test;
 
 import main.manager.HistoryManager;
 import main.manager.InMemoryHistoryManager;
+import main.manager.TaskTypes;
 import main.task.StatusEnum;
 import main.task.Task;
 import org.junit.jupiter.api.BeforeEach;
@@ -23,7 +24,7 @@ public class InMemoryHistoryManagerTest {
     }
 
     protected Task addTask() {
-        return new Task("Description", "Title", StatusEnum.NEW, Instant.now(), 0);
+        return new Task("Description", "Title", StatusEnum.NEW, Instant.now(), 0, TaskTypes.TASK);
     }
 
     @BeforeEach
