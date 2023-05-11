@@ -19,8 +19,6 @@ public class InMemoryTaskManager implements TaskManager {
     final Map<Integer, Task> tasks;
     final Map<Integer, Subtask> subtasks;
     final Map<Integer, Epic> epics;
-
-    private List<Integer> allTypesOfTasksIds;
     final InMemoryHistoryManager historyManager;
 
     private final Comparator<Task> taskComparator = Comparator.comparing(Task::getStartTime);
@@ -342,10 +340,10 @@ public class InMemoryTaskManager implements TaskManager {
                 if (taskSave.getStartTime() != null && taskSave.getEndTime() != null) {
                     if (task.getStartTime().isBefore(taskSave.getStartTime())
                             && task.getEndTime().isBefore(taskSave.getStartTime())) {
-                        return true;
+                        return false;
                     } else if (task.getStartTime().isAfter(taskSave.getEndTime())
                             && task.getEndTime().isAfter(taskSave.getEndTime())) {
-                        return true;
+                        return false;
                     }
                 } else {
                     sizeTimeNull++;
@@ -354,14 +352,14 @@ public class InMemoryTaskManager implements TaskManager {
             }
             return sizeTimeNull == tasks.size();
         } else {
-            return true;
+            return false;
         }
     }
 
     private void validateTaskPriority() {
         List<Task> tasks = getPrioritizedTasks();
 
-        for (int i = 1; i < tasks.size(); i++) {
+        for (int i = 0; i < tasks.size(); i++) {
             Task task = tasks.get(i);
 
             boolean taskHasIntersections = checkTime(task);
@@ -373,8 +371,9 @@ public class InMemoryTaskManager implements TaskManager {
         }
     }
 
-    private List<Task> getPrioritizedTasks() {
-        return prioritizedTasks.stream().toList();
+    @Override
+    public List<Task> getPrioritizedTasks() {
+        return new ArrayList<>(prioritizedTasks);
     }
 
 }

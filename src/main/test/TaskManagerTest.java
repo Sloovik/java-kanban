@@ -19,10 +19,15 @@ abstract class TaskManagerTest <T extends TaskManager> {
 
     protected T manager;
     protected Task createTask() {
-        return new Task("Description", "Title", StatusEnum.NEW, Instant.now(), 0, TaskTypes.TASK);
+        return new Task("Description", "Title", StatusEnum.NEW, Instant.now().minusSeconds(100000000L), 0, TaskTypes.TASK);
+    }
+    protected Task createSecondTask() {
+        return new Task("Description", "Title2", StatusEnum.NEW, Instant.now().plusSeconds(100000000000L), 0, TaskTypes.TASK);
+    }
+    protected Task createThirdTask() {
+        return new Task("Description", "Title3", StatusEnum.NEW, Instant.now(), 0, TaskTypes.TASK);
     }
     protected Epic createEpic() {
-
         return new Epic("Description", "Title", StatusEnum.NEW, Instant.now(), 0, TaskTypes.EPIC);
     }
     protected Subtask createSubtask(Epic epic) {
