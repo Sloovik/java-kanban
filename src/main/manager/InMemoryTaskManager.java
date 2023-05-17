@@ -16,9 +16,9 @@ public class InMemoryTaskManager implements TaskManager {
 
     protected Integer id;
     private Integer nextID;
-    final Map<Integer, Task> tasks;
-    final Map<Integer, Subtask> subtasks;
-    final Map<Integer, Epic> epics;
+    protected final Map<Integer, Task> tasks;
+    protected final Map<Integer, Subtask> subtasks;
+    protected final Map<Integer, Epic> epics;
     final InMemoryHistoryManager historyManager;
 
     private final Comparator<Task> taskComparator = Comparator.comparing(Task::getStartTime);
