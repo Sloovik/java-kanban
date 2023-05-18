@@ -67,12 +67,13 @@ class HttpTaskManagerTest<T extends TaskManagerTest<HttpTaskManager>> {
 
     @Test
     public void shouldLoadSubtasks() {
-        Epic epic1 = new Epic("description1", "name1", StatusEnum.NEW, Instant.now(), 5);
-        Subtask subtask1 = new Subtask("description1", "name1", StatusEnum.NEW, epic1.getId()
-                , Instant.now(), 6, TaskTypes.SUBTASK);
+        Epic epic1 = new Epic("description1", "name1", StatusEnum.NEW, Instant.now(), 5, TaskTypes.EPIC);
+        manager.addEpic(epic1);
+        Subtask subtask1 = new Subtask("description1", "name1", StatusEnum.NEW, epic1.getId(),
+                Instant.now(), 6, TaskTypes.SUBTASK);
+        manager.addSubtask(subtask1);
         Subtask subtask2 = new Subtask("description2", "name2", StatusEnum.NEW, epic1.getId(),
                 Instant.now(), 7, TaskTypes.SUBTASK);
-        manager.addSubtask(subtask1);
         manager.addSubtask(subtask2);
         manager.getSubTaskByID(subtask1.getId());
         manager.getSubTaskByID(subtask2.getId());

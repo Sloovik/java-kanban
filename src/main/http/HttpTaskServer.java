@@ -15,7 +15,7 @@ public class HttpTaskServer {
 
     public HttpTaskServer() throws IOException, InterruptedException {
         HistoryManager historyManager = Managers.getDefaultHistory();
-        TaskManager taskManager = Managers.getDefault(historyManager.toString()); // maybe trbl
+        TaskManager taskManager = Managers.getDefault(historyManager);
         this.httpServer = HttpServer.create();
         httpServer.bind(new InetSocketAddress(PORT), 0);
         httpServer.createContext("/tasks/task/", new TaskHandler(taskManager));

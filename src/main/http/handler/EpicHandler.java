@@ -69,9 +69,9 @@ public class EpicHandler implements HttpHandler {
                         response = "Эпик с id=" + id + " обновлен";
                     } else {
                         System.out.println("CREATED");
-                        Epic epicCreated = taskManager.addEpic(epic);
+                        Integer epicCreated = taskManager.addEpic(epic);
                         System.out.println("CREATED EPIC: " + epicCreated);
-                        int idCreated = epicCreated.getId();
+                        int idCreated = epicCreated;
                         statusCode = 201;
                         response = "Создан эпик с id=" + idCreated;
                     }

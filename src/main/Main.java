@@ -1,11 +1,16 @@
 package main;
 
-import main.manager.FileBackedTasksManager;
-import main.manager.Managers;
-import main.manager.TaskManager;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import main.adapter.InstantAdapter;
+import main.http.KVServer;
+import main.manager.*;
 import main.task.Epic;
+import main.task.StatusEnum;
 import main.task.Subtask;
 import main.task.Task;
+
+import java.time.Instant;
 
 import static main.task.StatusEnum.NEW;
 
@@ -16,6 +21,61 @@ import static main.task.StatusEnum.NEW;
 public class Main {
 
     public static void main(String[] args) {
+        KVServer server;
+        try {
+            Gson gson = new GsonBuilder().registerTypeAdapter(Instant.class, new InstantAdapter()).create();
+
+            server = new KVServer();
+            server.start();
+            HistoryManager historyManager = Managers.getDefaultHistory();
+            TaskManager httpTaskManager = Managers.getDefault(historyManager);
+
+            Task task1 = new Task(
+                    "Get a job", "Employment",
+                    StatusEnum.NEW,
+                    Instant.now(),
+                    1
+            );
+            httpTaskManager.addTask(task1);
+
+            Epic epic1 = new Epic(
+                    "Eat, sleep, code, repeat",
+                    "Lifestyle",
+                    StatusEnum.NEW,
+                    Instant.now(),
+                    2,
+                    TaskTypes.EPIC
+            );
+            httpTaskManager.addEpic(epic1);
+
+            Subtask subtask1 = new Subtask(
+                    "Buy 3 new cars",
+                    "Pocket money",
+                    StatusEnum.NEW,
+                    epic1.getId(),
+                    Instant.now(),
+                    3,
+                    TaskTypes.SUBTASK
+            );
+            httpTaskManager.addSubtask(subtask1);
+
+
+            httpTaskManager.getTaskByID(task1.getId());
+            httpTaskManager.getEpicByID(epic1.getId());
+            httpTaskManager.getSubTaskByID(subtask1.getId());
+
+            System.out.println("Printing all tasks");
+            System.out.println(gson.toJson(httpTaskManager.getTaskList()));
+            System.out.println("Printing all epics");
+            System.out.println(gson.toJson(httpTaskManager.getEpicList()));
+            System.out.println("Printing all subtasks");
+            System.out.println(gson.toJson(httpTaskManager.getSubtaskList()));
+            System.out.println("Loaded manager");
+            System.out.println(httpTaskManager);
+            server.stop();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 //        TaskManager taskManager = Managers.getDefault("data/data.csv");
 //
 //        Integer task1 = taskManager.addTask(new Task(1, "Первый таск", "Убраться", NEW));

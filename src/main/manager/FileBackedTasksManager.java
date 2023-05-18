@@ -38,6 +38,10 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
         }
     }
 
+    public FileBackedTasksManager(HistoryManager historyManager) {
+        super();
+    }
+
     public static FileBackedTasksManager loadFromFile(String fileName) {
 
         FileBackedTasksManager fileBackedTasksManager = new FileBackedTasksManager(fileName);

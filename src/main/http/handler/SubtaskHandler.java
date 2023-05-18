@@ -68,9 +68,9 @@ public class SubtaskHandler implements HttpHandler {
                     }
                     else {
                         System.out.println("CREATED");
-                        Subtask subtaskCreated = taskManager.addSubtask(subtask);
+                        Integer subtaskCreated = taskManager.addSubtask(subtask);
                         System.out.println("CREATED SUBTASK: " + subtaskCreated);
-                        int idCreated = subtaskCreated.getId();
+                        int idCreated = subtaskCreated;
                         statusCode = 201;
                         response = "Создана подзадача с id=" + idCreated;
                     }
